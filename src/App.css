@@ -3,6 +3,10 @@
   src: url('/src/assets/Font/PPNeueMachina-PlainRegular.otf') format('woff');
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   padding: 0;
@@ -10,86 +14,3 @@ body {
   font-family: 'NeuMachina';
 }
 
-.navbar {
-  background-color: transparent;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 20px;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar-left,
-.navbar-center,
-.navbar-right {
-  color: black;
-  font-size: 20px;
-}
-
-.navbar-center {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.contact-button {
-  background-color: transparent;
-  border-color: black;
-  color: black;
-  padding: 8px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-right: 30px;
-}
-
-.donation-portal {
-  font-family: 'NeuMachina';
-  font-size: min(15vw, 80px);
-  font-weight: bold;
-  color: #333;
-  margin-left: 48px;
-}
-
-.line1, .line2 {
-  display: block;
-}
-
-
-.donate-box {
-  margin: 48px;
-  position: relative;
-  background-image: url('/src/assets/img1.png');
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-  padding: 20px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
-
-.year {
-  position: relative;
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.donate-button {
-  position: relative;
-  padding: 10px 20px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-.description {
-  position: relative;
-  margin-top: 20px;
-  font-size: 16px;
-}
