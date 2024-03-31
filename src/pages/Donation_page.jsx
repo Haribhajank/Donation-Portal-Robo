@@ -20,9 +20,37 @@ function Donation_page() {
 			.email("Invalid email address"),
 	});
 	const navigate = useNavigate();
-	const handleSubmit = (values) => {
-		navigate("/payment");
-	};
+
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    console.log("Form Submitted",values);
+    try {
+      // Disable the submit button while form is submitting
+      setSubmitting(true);
+  
+      // Make POST request to server's '/donations' route
+      const response = await fetch('http://localhost:3000/donations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit form data');
+      }
+  
+      // Navigate to the next page
+      navigate('/payment');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      // Re-enable the submit button after form submission is complete
+      setSubmitting(false);
+    }
+  };
+  
 	return (
 		<div className="h-screen w-screen">
 			<div className="h-[10vh] z-50">
