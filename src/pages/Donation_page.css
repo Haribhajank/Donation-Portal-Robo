@@ -1,0 +1,47 @@
+.donation_form {
+  color: black;
+  padding: 1% 0%;
+  font-size: 150%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(220, 220, 220, 1);
+}
+
+.donation_form_header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0% 5%;
+}
+.donation_form__entry {
+  background-color: rgba(220, 220, 220, 1);
+  width: 100%;
+  padding: 2% 5%;
+}
+.form_radio_label input[type="radio"] {
+  display: none;
+  /* Hide the radio button */
+}
+
+.form_radio_label .radio_text {
+  padding: 8px 16px;
+  border: 1px solid #424242;
+  border-radius: 4px;
+}
+.form_radio_label input[type="radio"]:checked+.radio_text {
+  background-color: rgb(183, 198, 255);
+  /* Change background color when selected */
+}
+input {
+    background: #F0F0F0;
+    border-radius: 5px;
+    font-style: normal;
+    /* font-weight: 600; */
+    /* font-size: 1.2rem; */
+    /* line-height: 1.5rem; */
+    /* identical to box height */
+    padding-left: 20px;
+    margin-top: 3px;
+    color: rgba(0, 0, 0, 0.9);
+    width: 40vw;
+    outline: none;
+}

@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Landing_page from "./pages/Landing_page";
 import Donation_page from "./pages/Donation_page";
+import Payment_page from "./pages/Payment_page";
 
 function App() {
 	const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
 			path: "/donation",
 			element: <Donation_page />,
 		},
+		{
+			path:"/payment",
+			element:<Payment_page />
+		}
 	]);
 	return <RouterProvider router={router} />;
 }
