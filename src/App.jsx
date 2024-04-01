@@ -7,6 +7,7 @@ import {
 import Landing_page from "./pages/Landing_page";
 import Donation_page from "./pages/Donation_page";
 import Payment_page from "./pages/Payment_page";
+import Success from "./pages/Success";
 
 function App() {
 	const router = createBrowserRouter([
@@ -21,6 +22,10 @@ function App() {
 		{
 			path:"/payment",
 			element:<Payment_page />
+		},
+		{
+			path:"/paymentsuccess",
+			element:<Success />
 		}
 	]);
 	return <RouterProvider router={router} />;
