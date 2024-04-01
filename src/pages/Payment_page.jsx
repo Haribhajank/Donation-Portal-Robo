@@ -9,10 +9,10 @@ function Payment_page() {
 		// console.log(values.amount);
 		const amount = values.amount
 
-		const {data :{ key } } = await axios.get("http://localhost:4000/api/getkey")
+		const {data :{ key } } = await axios.get("https://donation-portal-robo-backend.onrender.com/api/getkey")
 
 
-		const { data:{order} } = await axios.post("http://localhost:4000/api/checkout", {
+		const { data:{order} } = await axios.post("https://donation-portal-robo-backend.onrender.com/api/checkout", {
 			amount
 		})
 		
@@ -24,7 +24,7 @@ function Payment_page() {
             description: "Funding for Robotics Club",
             image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iitg.ac.in%2Fstud%2Fgymkhana%2Ftechnical%2Fhome%2FRoboticsHome.html&psig=AOvVaw0fAzW82hATDLbG1Z3THgBj&ust=1712035415833000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKDdxIWjoIUDFQAAAAAdAAAAABAE",
             order_id: order.id,
-            callback_url: "http://localhost:4000/api/paymentverification",
+            callback_url: "https://donation-portal-robo-backend.onrender.com/api/paymentverification",
             prefill: {
                 name: "Ayush Mothiya",
                 email: "ayush@gmail.com",
