@@ -29,7 +29,7 @@ function Donation_page() {
       setSubmitting(true);
   
       // Make POST request to server's '/donations' route
-      const response = await fetch('http://localhost:4000/donations', {
+      const response = await fetch('https://donation-portal-robo-backend.onrender.com/donations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
