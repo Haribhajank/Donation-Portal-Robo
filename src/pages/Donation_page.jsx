@@ -14,43 +14,89 @@ function Donation_page() {
 		email: "",
 		number: "",
 	};
-	const validationSchema = Yup.object({
+	const validationSchema1 = Yup.object({
 		name: Yup.string().required("Name is required"),
-		email: Yup.string()
-			.email("Invalid email address"),
+		email: Yup.string().email("Invalid email address"),
+	});
+	const validationSchema2 = Yup.object({
+		name: Yup.string(),
+		email: Yup.string().email("Invalid email address"),
 	});
 	const navigate = useNavigate();
 
+	const handleSubmit = async (values, { setSubmitting }) => {
+		console.log("Form Submitted", values);
+		try {
+			// Disable the submit button while form is submitting
+			setSubmitting(true);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    console.log("Form Submitted",values);
-    try {
-      // Disable the submit button while form is submitting
-      setSubmitting(true);
-  
-      // Make POST request to server's '/donations' route
-      const response = await fetch('https://donation-portal-robo-backend.onrender.com/donations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to submit form data');
-      }
-  
-      // Navigate to the next page
-      navigate('/payment');
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      // Re-enable the submit button after form submission is complete
-      setSubmitting(false);
-    }
-  };
-  
+			// Make POST request to server's '/donations' route
+			const response = await fetch(
+				"https://donation-portal-robo-backend.onrender.com/donations",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(values),
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error("Failed to submit form data");
+			}
+
+			// Navigate to the next page
+			navigate("/payment");
+		} catch (error) {
+			console.error("Error submitting form:", error);
+		} finally {
+			// Re-enable the submit button after form submission is complete
+			setSubmitting(false);
+		}
+	};
+	const [donationType, setDonationType] = useState("open");
+
+	const handleDonationTypeChange = (event) => {
+		setDonationType(event.target.value);
+	};
+	const DonationTypeSelector = () => {
+		return (
+			<div className="flex gap-[2%]">
+				<div>01</div>
+				<div>
+					<p>Want to keep the donation open or anonymous?</p>
+					<div className="flex flex-wrap gap-10 my-2">
+						<label className="form_radio_label cursor-pointer" htmlFor="open">
+							<Field
+								name="donationType"
+								type="radio"
+								value="open"
+								id="open"
+								checked={donationType === "open"}
+								onChange={handleDonationTypeChange}
+							/>
+							<span className="radio_text">Open</span>
+						</label>
+						<label
+							className="form_radio_label cursor-pointer"
+							htmlFor="anonymous"
+						>
+							<Field
+								name="donationType"
+								type="radio"
+								value="anonymous"
+								id="anonymous"
+								checked={donationType === "anonymous"}
+								onChange={handleDonationTypeChange}
+							/>
+							<span className="radio_text">Anonymous</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		);
+	};
 	return (
 		<div className="h-screen w-screen">
 			<div className="h-[10vh] z-50">
@@ -70,97 +116,83 @@ function Donation_page() {
 				<div className="donation_form__entry grow">
 					<Formik
 						initialValues={initialValues}
-						validationSchema={validationSchema}
+						validationSchema={donationType === "open" ? validationSchema1 : validationSchema2}
 						onSubmit={handleSubmit}
 					>
-						<Form className="flex w-full flex-col h-full gap-y-8">
-							<div className="flex gap-[2%]">
-								<div>01</div>
-								<div>
-									<p>Want to keep the donation open or anonymous?</p>
-									<div className="flex flex-wrap gap-10 my-2">
-										<label
-											className="form_radio_label cursor-pointer"
-											htmlFor="open"
+						<Form>
+							{donationType === "anonymous" && (
+								<div className="flex w-full flex-col h-full gap-y-8">
+									<DonationTypeSelector />
+									<div className="flex w-full justify-end">
+										<button
+											className="border-2 border-black w-[20%] py-2"
+											type="submit"
 										>
-											<Field
-												name="donationType"
-												type="radio"
-												value="open"
-												id="open"
+											Next
+										</button>
+									</div>
+								</div>
+							)}
+							{donationType === "open" && (
+								<div className="flex w-full flex-col h-full gap-y-8">
+									<DonationTypeSelector />
+									<div className="flex gap-[2%]">
+										<div>02</div>
+										<div>
+											<p>What is your name?</p>
+											<Field name="name" className="" type="text" />
+											<ErrorMessage
+												name="name"
+												component={"div"}
+												className="error"
 											/>
-											<span className="radio_text">Open</span>
-										</label>
-										<label
-											className="form_radio_label cursor-pointer"
-											htmlFor="anonymous"
+										</div>
+									</div>
+									<div className="flex gap-[2%]">
+										<div>03</div>
+										<div>
+											<p>Relation with IITG or Robotics club</p>
+											<Field name="relation" className="" type="text" />
+										</div>
+									</div>
+									<div className="flex gap-[2%]">
+										<div>04</div>
+										<div>
+											<p>Current designation</p>
+											<Field name="designation" className="" type="text" />
+										</div>
+									</div>
+									<div className="flex justify-between">
+										<div className="flex gap-[5%]">
+											<div>05</div>
+											<div>
+												<p>Email</p>
+												<Field name="email" className="" type="email" />
+											</div>
+										</div>
+										<div className="flex gap-[5%]">
+											<div>06</div>
+											<div className="min-w-fit">
+												<p>Phone Number</p>
+												<Field name="number" className="" type="number" />
+												<ErrorMessage
+													name="number"
+													component={"div"}
+													className="error"
+												/>
+											</div>
+										</div>
+									</div>
+									<div className="flex w-full justify-end">
+										<button
+											className="border-2 border-black w-[20%] py-2"
+											type="submit"
 										>
-											<Field
-												name="donationType"
-												type="radio"
-												value="anonymous"
-												id="anonymous"
-											/>
-											<span className="radio_text">Anonymous</span>
-										</label>
+											Next
+										</button>
 									</div>
 								</div>
-							</div>
-							<div className="flex gap-[2%]">
-								<div>02</div>
-								<div>
-									<p>What is your name?</p>
-									<Field name="name" className="" type="text" />
-									<ErrorMessage
-										name="name"
-										component={"div"}
-										className="error"
-									/>
-								</div>
-							</div>
-							<div className="flex gap-[2%]">
-								<div>03</div>
-								<div>
-									<p>Relation with IITG or Robotics club</p>
-									<Field name="relation" className="" type="text" />
-								</div>
-							</div>
-							<div className="flex gap-[2%]">
-								<div>04</div>
-								<div>
-									<p>Current designation</p>
-									<Field name="designation" className="" type="text" />
-								</div>
-							</div>
-							<div className="flex justify-between">
-								<div className="flex gap-[5%]">
-									<div>05</div>
-									<div>
-										<p>Email</p>
-										<Field name="email" className="" type="email" />
-									</div>
-								</div>
-								<div className="flex gap-[5%]">
-									<div>06</div>
-									<div className="min-w-fit">
-										<p>Phone Number</p>
-										<Field name="number" className="" type="number" />
-										<ErrorMessage
-											name="number"
-											component={"div"}
-											className="error"
-										/>
-									</div>
-								</div>
-							</div>
-							<div className="flex w-full justify-end">
-								<button
-									className="border-2 border-black w-[20%] py-2"
-									type="submit"
-								>
-									Next
-								</button>
-							</div>
+							)}
 						</Form>
 					</Formik>
 				</div>
