@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import "./Payment_page.css"
 import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import axios from "axios";
+import LoadingSpinner from './LoadingSpinner';
 
 function Payment_page() {
+
+	const [isLoading, setIsLoading] = useState(false);
+
 	const checkoutHandler = async(values) => {
+		setIsLoading(true);
 		// console.log(values.amount);
 		const amount = values.amount
 
@@ -37,6 +42,7 @@ function Payment_page() {
                 "color": "#121212"
             }
         };
+		setIsLoading(false);
         const razor = new window.Razorpay(options);
         razor.open();
 	}
@@ -66,6 +72,7 @@ function Payment_page() {
 					<p>Confirmation</p>
 				</div>
 				<div className="donation_form__entry grow">
+					{isLoading ? (<LoadingSpinner />) : (
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}
@@ -91,6 +98,7 @@ function Payment_page() {
 							</div>
 						</Form>
 					</Formik>
+					)}
 				</div>
 			</div>
 		</div>

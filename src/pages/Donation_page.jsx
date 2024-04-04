@@ -4,8 +4,12 @@ import "./Donation_page.css";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
 function Donation_page() {
+
+	const [isLoading, setIsLoading] = useState(false);
+
 	const initialValues = {
 		donationType: "open",
 		name: "",
@@ -24,6 +28,7 @@ function Donation_page() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     console.log("Form Submitted",values);
+	setIsLoading(true);
     try {
       // Disable the submit button while form is submitting
       setSubmitting(true);
@@ -40,6 +45,7 @@ function Donation_page() {
       if (!response.ok) {
         throw new Error('Failed to submit form data');
       }
+	  setIsLoading(false);
   
       // Navigate to the next page
       navigate('/payment');
@@ -68,6 +74,7 @@ function Donation_page() {
 					<p>Confirmation</p>
 				</div>
 				<div className="donation_form__entry grow">
+					{isLoading ? (<LoadingSpinner />) : (
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}
@@ -163,6 +170,7 @@ function Donation_page() {
 							</div>
 						</Form>
 					</Formik>
+					)}
 				</div>
 			</div>
 		</div>
