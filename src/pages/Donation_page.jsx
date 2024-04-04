@@ -30,6 +30,7 @@ function Donation_page() {
 
 	const handleSubmit = async (values, { setSubmitting }) => {
 		console.log("Form Submitted", values);
+		setIsLoading(true);
 		try {
 			// Disable the submit button while form is submitting
 			setSubmitting(true);
@@ -49,7 +50,7 @@ function Donation_page() {
 			if (!response.ok) {
 				throw new Error("Failed to submit form data");
 			}
-
+			setIsLoading(false);
 			// Navigate to the next page
 			navigate("/payment");
 		} catch (error) {
